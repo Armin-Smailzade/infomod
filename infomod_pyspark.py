@@ -14,31 +14,22 @@ spark = (SparkSession
 
 spark.sparkContext.setLogLevel("WARN")
 
+INPUT_DATA = "s3://data/Living_Room_False_Negative.csv"
 COLUMN_NAMES = [] 
 ROW_NUM = 1
 DIFF_THRESHOLD = 1
 SAMPLE_SIZE = 100
 
-def run_pipeline():
+def run_pipeline(input_data):
    
-    raw_data_path = "s3://data/Living_Room_False_Negative.csv"
+    raw_data_path = input_data
     target = "target"
     pred = "pred"
 
-    # ********************* Extract Training patterns *********************
-#     v = load_data(target_column = "target", path = raw_data_path)
-#     r, _ = train(pattern_name = "target", save_patterns=True)
-#     save_csv(r, "patterns")
-    
-    # ********************* Extract FP patterns *********************
-#     v = load_data(target_column = "fp", path = raw_data_path)
-#     r, kl = train(pattern_name = "fp", save_patterns=True)
-#     save_csv(r, "fp_kitchen_patterns")
-
-    # ********************* Extract FN patterns *********************
-    v = load_data(target_column = "fn", path = raw_data_path)
-    r, kl = train(pattern_name = "fn", save_patterns=True)
-    save_csv(r, "fn_living_room_patterns") 
+    # ********************* Extract patterns *********************
+    v = load_data(target_column = "target", path = raw_data_path)
+    r, _ = train(pattern_name = "target", save_patterns=True)
+    save_csv(r, "patterns")
 
 
 def load_data(target_column, path):
@@ -660,4 +651,4 @@ def calculate_final_kl():
 
 ############################################################## 
 
-run_pipeline()
+run_pipeline(INPUT_DATA)
